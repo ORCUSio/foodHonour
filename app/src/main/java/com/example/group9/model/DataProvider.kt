@@ -136,25 +136,7 @@ object DataProvider {
             imageUrl = "https://lh3.googleusercontent.com/p/AF1QipO6-vvhwEFWpT6_aEClDTQcZNlfXmS2d0_wvl-Q=w260-h175-n-k-no",
             tags = listOf("Popular", "New"),
             nutritionalInfo = NutritionalInfo(calories = 550, protein = 30, carbs = 45)
-        ),
-        FoodItem(
-            id = 12,
-            name = "Margherita Pizza",
-            description = "Classic Neapolitan pizza with mozzarella, fresh basil, and tomato sauce.",
-            price = 100.49,
-            imageUrl = "https://lh3.googleusercontent.com/p/AF1QipPmh3oFzX8XrMM4B9mIsxZRxhR4fPlj4bbHD8vC=w260-h175-n-k-no",
-            tags = listOf("Vegetarian", "Popular"),
-            nutritionalInfo = NutritionalInfo(calories = 720, protein = 25, carbs = 80)
-        ),
-        FoodItem(
-            id = 13,
-            name = "Spicy Chicken Wrap",
-            description = "Grilled chicken with spicy mayo, lettuce, and tomato wrapped in a tortilla.",
-            price = 70.49,
-            imageUrl = "https://lh3.googleusercontent.com/p/AF1QipP-hpnD4nU6W5BZyyA_0mV3JW0yqQgi_FQ88K_e=w260-h175-n-k-no",
-            tags = listOf("Spicy", "High Protein"),
-            nutritionalInfo = NutritionalInfo(calories = 480, protein = 35, carbs = 40)
-        ),
+        )
     )
 
     var cartItems = mutableStateListOf<CartItem>()
