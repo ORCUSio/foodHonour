@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import com.example.group9.model.DataProvider
 import com.example.group9.ui.screens.CheckoutScreen
 import com.example.group9.ui.screens.HomeScreen
 import com.example.group9.ui.screens.ItemDetailScreen
+import com.example.group9.ui.screens.TeamScreen
 import com.example.group9.ui.theme.Group9Theme
 
 class MainActivity : ComponentActivity() {
@@ -54,6 +56,9 @@ fun FoodDeliveryApp() {
                     }
                 },
                 actions = {
+                    IconButton(onClick = { navController.navigate("team") }) {
+                        Icon(Icons.Default.AccountBox, contentDescription = "Team")
+                    }
                     IconButton(onClick = { navController.navigate("checkout") }) {
                         BadgedBox(badge = { Badge { Text("${cartItems.size}") } }) {
                             Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
@@ -82,6 +87,9 @@ fun FoodDeliveryApp() {
             }
             composable("checkout") {
                 CheckoutScreen()
+            }
+            composable("team") {
+                TeamScreen()
             }
         }
     }
