@@ -22,8 +22,8 @@ import com.example.group9.model.DataProvider
 
 @Composable
 fun CheckoutScreen() {
-    val cartItems = remember { mutableStateOf(DataProvider.cartItems) }
-    val subtotal = cartItems.value.sumOf { it.foodItem.price * it.quantity }
+    val cartItems = DataProvider.cartItems
+    val subtotal = cartItems.sumOf { it.foodItem.price * it.quantity }
     val tax = subtotal * 0.1
     val deliveryFee = 5.0
     val total = subtotal + tax + deliveryFee
@@ -42,17 +42,15 @@ fun CheckoutScreen() {
                     modifier = Modifier.padding(16.dp)
                 )
             }
-            items(cartItems.value) { cartItem ->
+            items(cartItems) { cartItem ->
                 CartItemRow(cartItem = cartItem, onQuantityChanged = { newQuantity ->
-                    val index = cartItems.value.indexOf(cartItem)
+                    val index = cartItems.indexOf(cartItem)
                     if (index != -1) {
-                        val updatedList = cartItems.value.toMutableList()
                         if (newQuantity > 0) {
-                            updatedList[index] = cartItem.copy(quantity = newQuantity)
+                            cartItems[index] = cartItem.copy(quantity = newQuantity)
                         } else {
-                            updatedList.removeAt(index)
+                            cartItems.removeAt(index)
                         }
-                        cartItems.value = updatedList
                     }
                 })
             }
@@ -98,7 +96,7 @@ fun CartItemRow(cartItem: CartItem, onQuantityChanged: (Int) -> Unit) {
         }
         Column(horizontalAlignment = Alignment.End) {
             Text(
-                text = "$${cartItem.foodItem.price * cartItem.quantity}",
+                text = "₹${cartItem.foodItem.price * cartItem.quantity}",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )

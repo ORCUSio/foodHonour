@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.group9.model.CartItem
 import com.example.group9.model.DataProvider
 import com.example.group9.model.FoodItem
 import com.example.group9.ui.components.CustomizationBottomSheet
@@ -31,25 +32,10 @@ fun HomeScreen(navController: NavController) {
                     navController.navigate("itemDetail/${foodItem.id}")
                 },
                 onAddToCartClick = {
-                    selectedFoodItem = foodItem
-                    scope.launch { sheetState.show() }
+                    val cartItem = CartItem(foodItem, 1, "Regular", emptyList())
+                    DataProvider.addToCart(cartItem)
                 }
             )
-        }
-    }
-
-    if (selectedFoodItem != null) {
-        ModalBottomSheet(
-            onDismissRequest = { selectedFoodItem = null },
-            sheetState = sheetState
-        ) {
-            CustomizationBottomSheet(foodItem = selectedFoodItem!!) {
-                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                    if (!sheetState.isVisible) {
-                        selectedFoodItem = null
-                    }
-                }
-            }
         }
     }
 }

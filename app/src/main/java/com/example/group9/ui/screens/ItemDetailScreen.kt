@@ -14,12 +14,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.group9.model.CartItem
 import com.example.group9.model.DataProvider
 import com.example.group9.model.FoodItem
-import com.example.group9.ui.components.CustomizationBottomSheet
 
 @Composable
-fun ItemDetailScreen(foodItem: FoodItem) {
+fun ItemDetailScreen(foodItem: FoodItem, onAddToCart: (CartItem) -> Unit) {
+    var selectedSize by remember { mutableStateOf("Regular") }
+    val sizes = listOf("Regular", "Large", "X-Large")
+
+    var extraCheese by remember { mutableStateOf(false) }
+    var extraSauce by remember { mutableStateOf(false) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -51,7 +57,7 @@ fun ItemDetailScreen(foodItem: FoodItem) {
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "$${foodItem.price}",
+                        text = "₹${foodItem.price}",
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -65,14 +71,24 @@ fun ItemDetailScreen(foodItem: FoodItem) {
                     Divider()
                     Spacer(modifier = Modifier.height(16.dp))
                     // Inline Customization
-                    CustomizationSection(foodItem = foodItem)
+                    CustomizationSection(foodItem, selectedSize, sizes, extraCheese, extraSauce) { size, cheese, sauce ->
+                        selectedSize = size
+                        extraCheese = cheese
+                        extraSauce = sauce
+                    }
                 }
             }
         }
 
         // Sticky Add to Cart Button
         Button(
-            onClick = { /* TODO */ },
+            onClick = {
+                val addOns = mutableListOf<String>()
+                if (extraCheese) addOns.add("Extra Cheese")
+                if (extraSauce) addOns.add("Extra Sauce")
+                val cartItem = CartItem(foodItem, 1, selectedSize, addOns)
+                onAddToCart(cartItem)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -85,15 +101,14 @@ fun ItemDetailScreen(foodItem: FoodItem) {
 }
 
 @Composable
-fun CustomizationSection(foodItem: FoodItem) {
-    // This is a simplified version of the bottom sheet content,
-    // you can expand this to be identical if needed.
-    var selectedSize by remember { mutableStateOf("Regular") }
-    val sizes = listOf("Regular", "Large", "X-Large")
-
-    var extraCheese by remember { mutableStateOf(false) }
-    var extraSauce by remember { mutableStateOf(false) }
-
+fun CustomizationSection(
+    foodItem: FoodItem,
+    selectedSize: String,
+    sizes: List<String>,
+    extraCheese: Boolean,
+    extraSauce: Boolean,
+    onCustomizationChange: (String, Boolean, Boolean) -> Unit
+) {
     Column {
         Text(text = "Size", style = MaterialTheme.typography.titleMedium)
         sizes.forEach { size ->
@@ -103,7 +118,7 @@ fun CustomizationSection(foodItem: FoodItem) {
             ) {
                 RadioButton(
                     selected = (size == selectedSize),
-                    onClick = { selectedSize = size }
+                    onClick = { onCustomizationChange(size, extraCheese, extraSauce) }
                 )
                 Text(text = size, modifier = Modifier.padding(start = 8.dp))
             }
@@ -115,14 +130,14 @@ fun CustomizationSection(foodItem: FoodItem) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(vertical = 4.dp)
         ) {
-            Checkbox(checked = extraCheese, onCheckedChange = { extraCheese = it })
+            Checkbox(checked = extraCheese, onCheckedChange = { onCustomizationChange(selectedSize, it, extraSauce) })
             Text(text = "Extra Cheese", modifier = Modifier.padding(start = 8.dp))
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(vertical = 4.dp)
         ) {
-            Checkbox(checked = extraSauce, onCheckedChange = { extraSauce = it })
+            Checkbox(checked = extraSauce, onCheckedChange = { onCustomizationChange(selectedSize, extraCheese, it) })
             Text(text = "Extra Sauce", modifier = Modifier.padding(start = 8.dp))
         }
     }
@@ -132,5 +147,5 @@ fun CustomizationSection(foodItem: FoodItem) {
 @Preview(showBackground = true)
 @Composable
 fun ItemDetailScreenPreview() {
-    ItemDetailScreen(foodItem = DataProvider.foodList.first())
+    ItemDetailScreen(foodItem = DataProvider.foodList.first(), onAddToCart = {})
 }

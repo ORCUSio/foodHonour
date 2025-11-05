@@ -44,27 +44,26 @@ fun FoodItemCard(foodItem: FoodItem, onItemClick: () -> Unit, onAddToCartClick: 
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = foodItem.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(modifier = Modifier.height(8.dp))
-                foodItem.nutritionalInfo?.let {
-                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                        NutrientInfo(icon = R.drawable.ic_launcher_foreground, value = "${it.calories} kcal")
-                        NutrientInfo(icon = R.drawable.ic_launcher_foreground, value = "${it.protein}g protein")
-                    }
-                }
+
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    foodItem.nutritionalInfo?.let {
+                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                            NutrientInfo(icon = R.drawable.ic_launcher_foreground, value = "${it.calories} kcal")
+                            NutrientInfo(icon = R.drawable.ic_launcher_foreground, value = "${it.protein}g protein")
+                        }
+                    }
                     Text(
-                        text = "$${foodItem.price}",
+                        text = "₹${foodItem.price}",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
-                    Button(onClick = onAddToCartClick) {
-                        Text("Add to Cart")
-                    }
+
                 }
             }
         }
