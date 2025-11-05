@@ -16,12 +16,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.group9.model.CartItem
 import com.example.group9.model.DataProvider
 
 @Composable
-fun CheckoutScreen() {
+fun CheckoutScreen(navController: NavController) {
     val cartItems = DataProvider.cartItems
     val subtotal = cartItems.sumOf { it.foodItem.price * it.quantity }
     val tax = subtotal * 0.1
@@ -60,7 +62,7 @@ fun CheckoutScreen() {
         }
 
         Button(
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate("orderConfirmed") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -144,5 +146,5 @@ fun CheckoutSummary(subtotal: Double, tax: Double, deliveryFee: Double, total: D
 @Preview(showBackground = true)
 @Composable
 fun CheckoutScreenPreview() {
-    CheckoutScreen()
+    CheckoutScreen(navController = rememberNavController())
 }

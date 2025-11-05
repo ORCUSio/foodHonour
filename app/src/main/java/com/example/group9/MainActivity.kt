@@ -31,6 +31,7 @@ import com.example.group9.model.DataProvider
 import com.example.group9.ui.screens.CheckoutScreen
 import com.example.group9.ui.screens.HomeScreen
 import com.example.group9.ui.screens.ItemDetailScreen
+import com.example.group9.ui.screens.OrderConfirmedScreen
 import com.example.group9.ui.screens.TeamScreen
 import com.example.group9.ui.theme.Group9Theme
 
@@ -107,10 +108,19 @@ fun FoodDeliveryApp() {
                 }
             }
             composable("checkout") {
-                CheckoutScreen()
+                CheckoutScreen(navController = navController)
             }
             composable("team") {
                 TeamScreen()
+            }
+            composable("orderConfirmed") {
+                OrderConfirmedScreen(onContinueShopping = {
+                    navController.navigate("home") {
+                        popUpTo("home") {
+                            inclusive = true
+                        }
+                    }
+                })
             }
         }
     }
