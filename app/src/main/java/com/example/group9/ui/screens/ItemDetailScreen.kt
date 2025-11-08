@@ -140,6 +140,7 @@ fun CustomizationSection(
             Checkbox(checked = extraSauce, onCheckedChange = { onCustomizationChange(selectedSize, extraCheese, it) })
             Text(text = "Extra Sauce", modifier = Modifier.padding(start = 8.dp))
         }
+//         can add another option here to specify quantity, truncate the prices to two digits in checkout?, on clicking on logo(Food App) go to homescreen,
     }
 }
 
