@@ -62,7 +62,10 @@ fun CheckoutScreen(navController: NavController) {
         }
 
         Button(
-            onClick = { navController.navigate("orderConfirmed") },
+            onClick = {
+                DataProvider.emptyTheCart()
+                navController.navigate("orderConfirmed")
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)

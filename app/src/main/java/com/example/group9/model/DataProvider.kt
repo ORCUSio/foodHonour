@@ -11,7 +11,7 @@ object DataProvider {
             avatarUrl = "https://avatars.githubusercontent.com/u/810939?v=4"
         ),
         TeamMember(
-            name = "Nabeela",
+            name = "Nabeela Fatima Khan",
             role = "23C5049",
             avatarUrl = "https://avatars.githubusercontent.com/u/810939?v=4"
         ),
@@ -22,7 +22,7 @@ object DataProvider {
             avatarUrl = "https://avatars.githubusercontent.com/u/810939?v=4"
         ),
         TeamMember(
-            name = "Pawani",
+            name = "Pawani Khare",
             role = "23C5052",
             avatarUrl = "https://avatars.githubusercontent.com/u/810939?v=4"
         ),
@@ -144,5 +144,9 @@ object DataProvider {
 
     fun addToCart(item: CartItem) {
         cartItems.add(item)
+    }
+
+    fun emptyTheCart(){
+        cartItems.clear()
     }
 }
